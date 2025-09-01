@@ -18,16 +18,13 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y build-essential cmake git ocl-icd-opencl-dev opencl-headers
-
-      - name: Configure CMake
-        run: cmake -S . -B build
+          sudo apt install -y build-essential git ocl-icd-opencl-dev opencl-headers
 
       - name: Build project
-        run: cmake --build build --config Release -- -j$(nproc)
+        run: make -j$(nproc)
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: profanity2-linux
-          path: build/profanity2*
+          path: profanity2
