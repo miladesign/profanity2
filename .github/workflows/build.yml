@@ -23,8 +23,11 @@ jobs:
       - name: Build project
         run: make -j$(nproc)
 
+      - name: Verify binary
+        run: ./build/profanity2 --help
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: profanity2-linux
-          path: profanity2
+          path: build/profanity2
