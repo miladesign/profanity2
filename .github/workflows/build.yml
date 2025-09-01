@@ -1,4 +1,4 @@
-name: Build Profanity2
+name: Build Profanity2 (Linux)
 
 on:
   push:
@@ -9,36 +9,25 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install dependencies (Linux)
-        if: runner.os == 'Linux'
+      - name: Install dependencies
         run: |
           sudo apt update
           sudo apt install -y build-essential cmake git ocl-icd-opencl-dev opencl-headers
 
-      - name: Install dependencies (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          brew install cmake
-
       - name: Configure CMake
-        run: |
-          cmake -S . -B build
+        run: cmake -S . -B build
 
       - name: Build project
-        run: |
-          cmake --build build --config Release -- -j$(nproc)
+        run: cmake --build build --config Release -- -j$(nproc)
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: profanity2-${{ matrix.os }}
+          name: profanity2-linux
           path: build/profanity2*
