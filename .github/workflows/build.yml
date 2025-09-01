@@ -24,10 +24,10 @@ jobs:
         run: make -j$(nproc)
 
       - name: Verify binary
-        run: ./profanity2 --help
+        run: ./profanity2.x64 --help
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: profanity2-linux
-          path: profanity2
+          path: profanity2.x64
